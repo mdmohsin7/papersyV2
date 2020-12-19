@@ -131,7 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> msg() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
 
       if (message.notification != null) {
