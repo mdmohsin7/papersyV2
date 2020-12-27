@@ -1,8 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:papersy/business/core/auth/actions/logout_action.dart';
+import 'package:papersy/business/core/theme/actions/theme_action.dart';
 import 'package:papersy/business/main_state.dart';
-import 'package:papersy/business/core/theme/actions/theme_actions.dart';
 import 'home_widget.dart';
 import '../../../business/core/download/actions/fetch_files_action.dart';
 

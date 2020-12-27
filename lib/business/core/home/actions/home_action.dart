@@ -5,10 +5,12 @@ import 'package:async_redux/local_persist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:papersy/business/core/filter/actions/fetch_courses_action.dart';
+import 'package:papersy/business/core/theme/actions/change_theme_action.dart';
 import 'package:papersy/business/main_state.dart';
-import 'package:papersy/business/core/theme/actions/theme_actions.dart';
 import 'package:papersy/business/unions/notes/notes_union.dart';
 import 'package:papersy/business/unions/papers/papers_union.dart';
+import 'package:papersy/business/utils/values.dart';
+import 'package:papersy/client/models/extra_model.dart';
 import 'package:papersy/client/models/notes_model.dart';
 import 'package:papersy/client/models/papers_model.dart';
 
@@ -24,6 +26,7 @@ class HomeAction extends ReduxAction<AppState> {
   static Map<dynamic, dynamic> det;
   static Stream<List<Note>> notesList;
   static Stream<List<Paper>> papersList;
+  static Stream<List<Extra>> extrasList;
 
   HomeAction(this.num);
 
@@ -32,20 +35,18 @@ class HomeAction extends ReduxAction<AppState> {
     if (await LocalPersist('theme').exists()) {
       var isDark = await LocalPersist('theme').load();
       Map a = isDark[0];
-      print(a);
       dispatch(ChangeThemeAction(a['isDark']));
     }
     dispatch(WaitAction.add("fetching"));
     var sub = await Connectivity().checkConnectivity();
     if (sub == ConnectivityResult.none) {
       throw UserException(
-        "Please check your internet connection and then try again",
+        Values.noInternet,
       );
     } else {
       if (await LocalPersist("settings").exists()) {
         details = await LocalPersist("settings").load();
         det = details[0];
-        print(det);
         notesList = FirebaseFirestore.instance
             .collection("Notes")
             .doc("${det["course"]}")
@@ -68,6 +69,17 @@ class HomeAction extends ReduxAction<AppState> {
             .map(
               (_ps) => _ps.docs.map((_p) => Paper.fromFirestore(_p)).toList(),
             );
+        extrasList = FirebaseFirestore.instance
+            .collection("Extras")
+            .doc("${det["course"]}")
+            .collection("${det["branch"]}")
+            .doc("${det["semester"]}")
+            .collection("SEM${det["semester"]}")
+            .where("isv", isEqualTo: true)
+            .snapshots()
+            .map(
+              (_es) => _es.docs.map((_e) => Extra.fromFirestore(_e)).toList(),
+            );
       }
     }
   }
@@ -78,7 +90,6 @@ class HomeAction extends ReduxAction<AppState> {
     StreamSubscription papers;
     if (num == 0 && det != null) {
       notes = notesList.listen((event) {
-        print("listening");
         dispatch(NotesAction(notesList: event));
       });
       papers = papersList.listen((event) {
@@ -124,13 +135,12 @@ void initAction(Store<AppState> state, int i) {
   return state.dispatch(HomeAction(i));
 }
 
-void checkAuthentication(Store<AppState> state) {
+void checkAuthentication(Store<AppState> state) async {
   state.dispatch(FetchCoursesAction());
-  state.dispatch(CheckAuthAction());
+  await state.dispatchFuture(CheckAuthAction());
 }
 
 void disposeHomeAction(Store<AppState> state) {
-  print("disposed");
   return state.dispatch(DisposeAction());
 }
 

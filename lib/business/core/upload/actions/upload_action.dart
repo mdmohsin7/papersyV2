@@ -10,36 +10,6 @@ import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:papersy/business/utils/values.dart';
 import 'package:papersy/confidential/confidential_data.dart';
 
-class IndexAction extends ReduxAction<AppState> {
-  final bool isBack;
-  IndexAction(this.isBack);
-
-  @override
-  AppState reduce() {
-    if (isBack) {
-      return state.copy(
-        uploadState: UploadState(
-          fileName: state.uploadState.fileName,
-          index: state.uploadState.index - 1,
-          file: state.uploadState.file,
-          selectedVal: state.uploadState.selectedVal,
-          selectedValues: state.uploadState.selectedValues,
-        ),
-      );
-    } else {
-      return state.copy(
-        uploadState: UploadState(
-          fileName: state.uploadState.fileName,
-          index: state.uploadState.index + 1,
-          file: state.uploadState.file,
-          selectedVal: state.uploadState.selectedVal,
-          selectedValues: state.uploadState.selectedValues,
-        ),
-      );
-    }
-  }
-}
-
 class UploadAction extends ReduxAction<AppState> {
   var sub;
   @override
@@ -48,7 +18,6 @@ class UploadAction extends ReduxAction<AppState> {
     if (sub == ConnectivityResult.none) {
       NavigateAction.pop();
       throw UserException(Values.noInternet);
-      
     } else {
       if (await state.uploadState.file.length() > 40000000) {
         throw UserException(Values.pdfSize);
@@ -143,7 +112,8 @@ class UploadAction extends ReduxAction<AppState> {
       );
     }
 
-    await store.waitCondition((state) => state.wait.isWaitingFor("uploading") == false);
+    await store.waitCondition(
+        (state) => state.wait.isWaitingFor("uploading") == false);
     return state.copy(
       wait: Wait(),
       uploadState: UploadState.initialState(),
