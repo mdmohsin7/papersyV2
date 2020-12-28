@@ -112,7 +112,7 @@ class PapersCard extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             Container(
-                              width: 150,
+                              width: _width * 45,
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 '$year',
@@ -124,7 +124,7 @@ class PapersCard extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          width: 10.0,
+                          width: _width * 2,
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -135,7 +135,7 @@ class PapersCard extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             Container(
-                              width: 100,
+                              width: _width * 35,
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 '$uploader',
@@ -166,7 +166,7 @@ class PapersCard extends StatelessWidget {
                               ),
                             ),
                             alignment: Alignment.center,
-                            child: Text(
+                            child: const Text(
                               'Preview',
                               style: TextStyle(
                                 color: Colors.white,
@@ -188,7 +188,7 @@ class PapersCard extends StatelessWidget {
                               ),
                             ),
                             alignment: Alignment.center,
-                            child: Text(
+                            child: const Text(
                               'Download',
                               style: TextStyle(
                                 color: Colors.white,
@@ -225,20 +225,24 @@ class PapersCard extends StatelessWidget {
                   width: 3,
                 ),
                 TextButton(
-                    onPressed: () {
-                      report();
-                    },
-                    child: Text("Report",
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.headline5.color,
-                        ))),
+                  onPressed: () {
+                    report();
+                  },
+                  child: Text(
+                    "Report",
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.headline5.color,
+                    ),
+                  ),
+                ),
                 VerticalDivider(
                   width: 3,
                 ),
                 TextButton(
                   onPressed: () {
                     Share.share(
-                        'Hey check out this $subject question papers in Papersy app https://play.google.com/store/apps/details?id=com.thedumbcoders.papersy');
+                      'Hey check out this $subject question papers in Papersy app https://play.google.com/store/apps/details?id=com.thedumbcoders.papersy',
+                    );
                   },
                   child: Text(
                     "Share",

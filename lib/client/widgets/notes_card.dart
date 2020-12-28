@@ -83,7 +83,7 @@ class NotesCard extends StatelessWidget {
                               width: SizeConfig.blockSizeHorizontal * 60,
                               child: Text(
                                 '$subject',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   letterSpacing: 1.0,
                                 ),
                               ),
@@ -114,7 +114,7 @@ class NotesCard extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             Container(
-                              width: 150,
+                              width: _width * 45,
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 '$units',
@@ -137,11 +137,11 @@ class NotesCard extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             Container(
-                              width: 100,
+                              width: _width * 40,
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 '$author',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   letterSpacing: 1.0,
                                 ),
                               ),
@@ -171,7 +171,7 @@ class NotesCard extends StatelessWidget {
                             alignment: Alignment.center,
                             child: const Text(
                               'Preview',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 1.0,
                               ),
@@ -193,7 +193,7 @@ class NotesCard extends StatelessWidget {
                             alignment: Alignment.center,
                             child: const Text(
                               'Download',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 1.0,
                               ),
