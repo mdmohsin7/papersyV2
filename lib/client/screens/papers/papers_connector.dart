@@ -15,6 +15,7 @@ class PapersVM extends VmFactory<AppState, Papers> {
   PVM fromStore() {
     return PVM(
       papersList: state.homeState.papers,
+      papersUnion: state.homeState.papersUnion,
       download: (sub, year, link) => dispatch(
         DownloadAction(
           subject: sub,
@@ -26,7 +27,6 @@ class PapersVM extends VmFactory<AppState, Papers> {
       report: (type, course, sem, branch) => dispatch(
         ReportAction(type: type, course: course, sem: sem, branch: branch),
       ),
-      papersUnion: state.homeState.papersUnion,
     );
   }
 }
