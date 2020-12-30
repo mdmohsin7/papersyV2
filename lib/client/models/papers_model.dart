@@ -7,10 +7,12 @@ class Paper {
   final String uploader;
   final String id;
   final bool isVerified;
+  final String size;
 
   Paper({
     this.isVerified,
     this.id,
+    this.size,
     this.subject,
     this.uploader,
     this.year,
@@ -26,6 +28,7 @@ class Paper {
       subject: _data['s'],
       id: _data['id'],
       isVerified: _data['isv'],
+      size: _data['si'],
     );
   }
 }

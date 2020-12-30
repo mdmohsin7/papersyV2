@@ -94,6 +94,12 @@
 @import path_provider;
 #endif
 
+#if __has_include(<permission/PermissionPlugin.h>)
+#import <permission/PermissionPlugin.h>
+#else
+@import permission;
+#endif
+
 #if __has_include(<permission_handler/PermissionHandlerPlugin.h>)
 #import <permission_handler/PermissionHandlerPlugin.h>
 #else
@@ -148,6 +154,7 @@
   [FLTGoogleSignInPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTGoogleSignInPlugin"]];
   [OpenFilePlugin registerWithRegistrar:[registry registrarForPlugin:@"OpenFilePlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
+  [PermissionPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
   [FLTSharePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharePlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];

@@ -5,8 +5,8 @@ import 'package:papersy/business/main_state.dart';
 import 'package:papersy/business/utils/validators.dart';
 import 'package:papersy/client/widgets/heading_text.dart';
 import 'package:papersy/client/widgets/text_form_field.dart';
+import 'package:papersy/sizeconfig.dart';
 
-import '../../../../sizeconfig.dart';
 import '../login/login_connector.dart';
 
 
@@ -171,6 +171,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               },
             ),
           );
-        });
+        },
+      );
   }
 }
