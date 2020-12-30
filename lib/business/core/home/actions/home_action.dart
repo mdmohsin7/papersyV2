@@ -5,8 +5,10 @@ import 'package:async_redux/local_persist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:papersy/business/core/filter/actions/fetch_courses_action.dart';
+import 'package:papersy/business/core/home/actions/extras_action.dart';
 import 'package:papersy/business/core/theme/actions/change_theme_action.dart';
 import 'package:papersy/business/main_state.dart';
+import 'package:papersy/business/unions/extras/extras_union.dart';
 import 'package:papersy/business/unions/notes/notes_union.dart';
 import 'package:papersy/business/unions/papers/papers_union.dart';
 import 'package:papersy/business/utils/values.dart';
@@ -88,6 +90,7 @@ class HomeAction extends ReduxAction<AppState> {
   AppState reduce() {
     StreamSubscription notes;
     StreamSubscription papers;
+    StreamSubscription extras;
     if (num == 0 && det != null) {
       notes = notesList.listen((event) {
         dispatch(NotesAction(notesList: event));
@@ -95,25 +98,33 @@ class HomeAction extends ReduxAction<AppState> {
       papers = papersList.listen((event) {
         dispatch(PapersAction(papersList: event));
       });
+      extras = extrasList.listen((event) {
+        dispatch(ExtrasAction(extrasList: event));
+      });
       return state.copy(
         homeState: HomeState(
           papersUnion: PapersUnion.loading(),
           notesUnion: NotesUnion.loading(),
+          extrasUnion: ExtrasUnion.loading(),
           index: state.homeState.index,
           notes: state.homeState.notes,
           papers: state.homeState.papers,
+          extras: state.homeState.extras,
         ),
       );
     } else if (num == 1) {
       notes.cancel();
       papers.cancel();
+      extras.cancel();
       return state.copy(
         homeState: HomeState(
           papersUnion: PapersUnion.none(),
           notesUnion: NotesUnion.none(),
+          extrasUnion: ExtrasUnion.none(),
           index: state.homeState.index,
           notes: state.homeState.notes,
           papers: state.homeState.papers,
+          extras: state.homeState.extras,
         ),
       );
     }

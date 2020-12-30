@@ -5,7 +5,6 @@ import 'package:papersy/client/models/papers_model.dart';
 
 import '../../../main_state.dart';
 
-
 class PapersAction extends ReduxAction<AppState> {
   List<Paper> papersList;
   PapersAction({this.papersList});
@@ -20,6 +19,8 @@ class PapersAction extends ReduxAction<AppState> {
           index: state.homeState.index,
           papers: papersList,
           papersUnion: PapersUnion.isEmpty(),
+          extras: state.homeState.extras,
+          extrasUnion: state.homeState.extrasUnion,
         ),
       );
     } else {
@@ -30,6 +31,8 @@ class PapersAction extends ReduxAction<AppState> {
           index: state.homeState.index,
           papers: papersList,
           papersUnion: PapersUnion.loaded(),
+          extras: state.homeState.extras,
+          extrasUnion: state.homeState.extrasUnion,
         ),
       );
     }
