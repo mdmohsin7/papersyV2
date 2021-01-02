@@ -1,5 +1,5 @@
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:papersy/sizeconfig.dart';
 import 'package:share/share.dart';
@@ -9,20 +9,16 @@ class PapersCard extends StatelessWidget {
   final String year;
   final String uploader;
   final VoidCallback download;
-  final int votesCount;
-  final Function vote;
-  final bool isUpvoted;
   final Function preview;
   final Function report;
+  final String size;
 
   const PapersCard(
       {this.subject,
       this.year,
       this.download,
       this.uploader,
-      this.votesCount,
-      this.vote,
-      this.isUpvoted,
+      this.size,
       this.preview,
       this.report});
 
@@ -206,23 +202,17 @@ class PapersCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconButton(
-                  onPressed: () {
-                    vote();
-                  },
-                  icon: isUpvoted
-                      ? Icon(Boxicons.bxs_upvote)
-                      : Icon(Boxicons.bx_upvote),
+                SizedBox(
+                  width: _width * 1.8,
                 ),
                 Text(
-                  (votesCount ?? 0).toString(),
+                  size == null ? "unavailable" : filesize(size),
                   style: TextStyle(
                     color: Theme.of(context).textTheme.headline5.color,
                   ),
                 ),
-                Icon(Boxicons.bx_downvote),
                 VerticalDivider(
-                  width: 3,
+                  width: _width * 2.6,
                 ),
                 TextButton(
                   onPressed: () {
