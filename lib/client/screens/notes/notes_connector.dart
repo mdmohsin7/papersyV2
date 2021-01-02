@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:papersy/business/core/download/actions/download_action.dart';
 import 'package:papersy/business/core/download/actions/preview_action.dart';
 import 'package:papersy/business/main_state.dart';
@@ -23,12 +24,9 @@ class NotesVM extends VmFactory<AppState, Notes> {
         print("new: $url");
         dispatch(PreviewAction(url: url));
       },
-      report: (type, course, branch, sem) => dispatch(
+      report: (ref) => dispatch(
         ReportAction(
-          type: type,
-          course: course,
-          branch: branch,
-          sem: sem,
+          ref: ref,
         ),
       ),
       notesUnion: state.homeState.notesUnion,
@@ -41,7 +39,7 @@ class NVM extends Vm {
   final Function(String, String, String) download;
   final bool isFetching;
   final Function(String) preview;
-  final Function(String, String, String, String) report;
+  final Function(DocumentReference) report;
   final NotesUnion notesUnion;
 
   NVM(

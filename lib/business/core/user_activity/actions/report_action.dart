@@ -7,12 +7,9 @@ import 'package:papersy/business/main_state.dart';
 import 'package:papersy/business/utils/values.dart';
 
 class ReportAction extends ReduxAction<AppState> {
-  final String type;
-  final String course;
-  final String branch;
-  final String sem;
+  final DocumentReference ref;
 
-  ReportAction({this.type, this.course, this.branch, this.sem});
+  ReportAction({this.ref});
 
   @override
   Future<AppState> reduce() async {
@@ -20,12 +17,11 @@ class ReportAction extends ReduxAction<AppState> {
     if (uid != null) {
       await FirebaseFirestore.instance.collection("Reports").doc().set({
         "uid": uid,
-        "t": type,
-        "c": course,
-        "s": sem,
+        "doc": ref.id,
+        "p": ref.parent.path,
       }).whenComplete(() => throw UserException(Values.reported));
     } else if (uid == null) {
-      throw UserException("You need to be signed in to report notes/papers");
+      throw UserException("You need to be signed in to be able to report anything.");
     }
     return null;
   }

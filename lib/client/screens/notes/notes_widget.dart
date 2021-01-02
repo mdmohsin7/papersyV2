@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:async_redux/async_redux.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -65,7 +66,6 @@ class _NotesState extends State<Notes> with AutomaticKeepAliveClientMixin {
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   var ni = index;
-                  print("pre = ${nvm.notesUnion}");
                   return AnimatedSwitcher(
                     duration: Duration(milliseconds: 400),
                     child: Builder(
@@ -109,12 +109,7 @@ class _NotesState extends State<Notes> with AutomaticKeepAliveClientMixin {
                           } else {
                             return NotesCard(
                               report: () {
-                                nvm.report(
-                                  "N",
-                                  nvm.notesList[ni].college,
-                                  nvm.notesList[ni].subject,
-                                  nvm.notesList[ni].author,
-                                );
+                                nvm.report(nvm.notesList[ni].ref);
                               },
                               download: () async {
                                 String sub = (nvm.notesList[ni]).subject;

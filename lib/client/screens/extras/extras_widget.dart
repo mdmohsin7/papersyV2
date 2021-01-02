@@ -79,12 +79,7 @@ class ExtrasWidget extends StatelessWidget {
                             return ExtrasCard(
                               type: evm.extrasList[index].type,
                               report: () {
-                                evm.report(
-                                  "P",
-                                  "OU",
-                                  evm.extrasList[index].subject,
-                                  evm.extrasList[index].uploader,
-                                );
+                                evm.report(evm.extrasList[index].ref);
                               },
                               preview: () async {
                                 // count1++;
@@ -103,7 +98,7 @@ class ExtrasWidget extends StatelessWidget {
                               },
                               download: () async {
                                 String sub = (evm.extrasList[index]).subject;
-                                String year = (evm.extrasList[index]).units;
+                                String units = (evm.extrasList[index]).units;
                                 String link = (evm.extrasList[index]).id != null
                                     ? (evm.extrasList[index]).id
                                     : (evm.extrasList[index]).link;
@@ -114,7 +109,7 @@ class ExtrasWidget extends StatelessWidget {
                                 //     myInterstitial.show();
                                 //   }
                                 // }
-                                evm.download(sub, year, link);
+                                evm.download(sub, units, link);
                               },
                               author: (evm.extrasList[index]).uploader,
                               subject: (evm.extrasList[index]).subject,

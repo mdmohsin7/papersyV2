@@ -8,15 +8,19 @@ class Paper {
   final String id;
   final bool isVerified;
   final String size;
+  final String docId;
+  final DocumentReference ref;
 
   Paper({
     this.isVerified,
     this.id,
+    this.docId,
     this.size,
     this.subject,
     this.uploader,
     this.year,
     this.download,
+    this.ref,
   });
 
   factory Paper.fromFirestore(DocumentSnapshot doc) {
@@ -29,6 +33,8 @@ class Paper {
       id: _data['id'],
       isVerified: _data['isv'],
       size: _data['si'],
+      ref: doc.reference,
+      docId: doc.id,
     );
   }
   Map<dynamic, dynamic> toJosn() {
@@ -36,7 +42,7 @@ class Paper {
       "a": uploader,
       "link": download,
       "s": subject,
-      'si':size,
+      'si': size,
       'y': year,
       'isv': false,
     };

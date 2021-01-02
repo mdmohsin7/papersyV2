@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:papersy/business/core/download/actions/download_action.dart';
 import 'package:papersy/business/core/download/actions/preview_action.dart';
 import 'package:papersy/business/main_state.dart';
@@ -24,9 +25,7 @@ class PapersVM extends VmFactory<AppState, Papers> {
         ),
       ),
       preview: (url) => dispatch(PreviewAction(url: url)),
-      report: (type, course, sem, branch) => dispatch(
-        ReportAction(type: type, course: course, sem: sem, branch: branch),
-      ),
+      report: (ref) => dispatch(ReportAction(ref: ref)),
     );
   }
 }
@@ -35,7 +34,7 @@ class PVM extends Vm {
   final List<Paper> papersList;
   final Function(String) preview;
   final Function(String, String, String) download;
-  final Function(String, String, String, String) report;
+  final Function(DocumentReference) report;
   final PapersUnion papersUnion;
 
   PVM(

@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:papersy/business/core/download/actions/download_action.dart';
 import 'package:papersy/business/core/download/actions/preview_action.dart';
 import 'package:papersy/business/core/user_activity/actions/report_action.dart';
@@ -22,9 +23,7 @@ class ExtrasVM extends VmFactory<AppState, ExtrasWidget> {
       ),
       preview: (url, isTutorial) =>
           dispatch(PreviewAction(url: url, isTutorial: isTutorial)),
-      report: (type, course, sem, branch) => dispatch(
-        ReportAction(type: type, course: course, sem: sem, branch: branch),
-      ),
+      report: (ref) => dispatch(ReportAction(ref: ref)),
     );
   }
 }
@@ -33,7 +32,7 @@ class EVM extends Vm {
   final List<Extra> extrasList;
   final Function(String, bool) preview;
   final Function(String, String, String) download;
-  final Function(String, String, String, String) report;
+  final Function(DocumentReference) report;
   final ExtrasUnion extrasUnion;
 
   EVM(

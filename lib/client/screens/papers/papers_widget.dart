@@ -117,12 +117,7 @@ class _PapersState extends State<Papers> with AutomaticKeepAliveClientMixin {
                           } else {
                             return PapersCard(
                               report: () {
-                                pvm.report(
-                                  "P",
-                                  "OU",
-                                  pvm.papersList[index].subject,
-                                  pvm.papersList[index].uploader,
-                                );
+                                pvm.report(pvm.papersList[index].ref);
                               },
                               preview: () async {
                                 count1++;

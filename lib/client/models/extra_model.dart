@@ -10,11 +10,13 @@ class Extra {
   final String docId;
   final String size;
   final bool isVerified;
+  final DocumentReference ref;
 
   Extra(
       {this.type,
       this.subject,
       this.units,
+      this.ref,
       this.uploader,
       this.link,
       this.id,
@@ -33,6 +35,7 @@ class Extra {
       units: _data['u'],
       uploader: _data['a'],
       docId: doc.id,
+      ref: doc.reference,
       isVerified: _data['isv'],
     );
   }
