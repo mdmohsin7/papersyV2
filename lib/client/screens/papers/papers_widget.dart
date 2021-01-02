@@ -152,8 +152,7 @@ class _PapersState extends State<Papers> with AutomaticKeepAliveClientMixin {
                               uploader: (pvm.papersList[index]).uploader,
                               subject: (pvm.papersList[index]).subject,
                               year: (pvm.papersList[index]).year,
-                              isUpvoted: false,
-                              votesCount: 0,
+                              size: pvm.papersList[index].size,
                             );
                           }
                         } else if (pvm.papersUnion is NoInternet) {
@@ -170,7 +169,7 @@ class _PapersState extends State<Papers> with AutomaticKeepAliveClientMixin {
                                     "assets/no_data.svg",
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   "Looks like we don\'t have papers of this branch",
                                 ),
                               ],

@@ -10,9 +10,6 @@ class PreviewWidget extends StatelessWidget {
   const PreviewWidget({this.url});
   @override
   Widget build(BuildContext context) {
-    // final args = ModalRoute.of(context).settings.arguments;
-
-    // print("url: ${args}");
     var urls = Uri.encodeComponent(url);
     print("test: ${Uri.encodeComponent(url)}");
     return StoreConnector<AppState, PreVM>(

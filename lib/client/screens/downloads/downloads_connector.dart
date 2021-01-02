@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:async_redux/async_redux.dart';
+import 'package:filex/filex.dart';
 import 'package:papersy/business/core/download/actions/fetch_files_action.dart';
 import 'package:papersy/business/core/download/actions/open_file_action.dart';
 import 'package:papersy/business/core/download/actions/permission_action.dart';
@@ -23,7 +22,7 @@ class DownloadsVM extends VmFactory<AppState, DownloadsWidget> {
 }
 
 class DVM extends Vm {
-  final List<FileSystemEntity> files;
+  final List<DirectoryItem> files;
   final Function(String) openFile;
   final Function fetchFiles;
   final Function requestPermission;

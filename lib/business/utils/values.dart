@@ -24,4 +24,6 @@ class Values {
   static const String appId = "ca-app-pub-2155617318975151~8093802505";
   static const String share =
       "Hey! check out this amazing app for OU notes and question papers of all courses and branches.\nYou can download/preview the notes/papers and can also share yours.\n\nCheck it out on PlayStore:\nhttps://play.google.com/store/apps/details?id=com.thedumbcoders.papersy";
+  static const String reported =
+      "Reported successfully. We will look into those notes/papers. If we don't find anything wrong or you reported them for fun/revenge/etc, we might ban your account based on your activity.";
 }

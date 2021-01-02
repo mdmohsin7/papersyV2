@@ -7,6 +7,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:papersy/business/core/download/actions/permission_action.dart';
 import 'package:papersy/business/main_state.dart';
+import 'package:papersy/business/utils/values.dart';
 
 class DownloadAction extends ReduxAction<AppState> {
   String subject;
@@ -20,7 +21,7 @@ class DownloadAction extends ReduxAction<AppState> {
     var sub = await Connectivity().checkConnectivity();
     if (sub == ConnectivityResult.none) {
       throw UserException(
-        "Please check your internet connection and then try again",
+        Values.noInternet,
       );
     }
   }

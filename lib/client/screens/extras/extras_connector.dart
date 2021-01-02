@@ -20,7 +20,8 @@ class ExtrasVM extends VmFactory<AppState, ExtrasWidget> {
           link: link,
         ),
       ),
-      preview: (url) => dispatch(PreviewAction(url: url)),
+      preview: (url, isTutorial) =>
+          dispatch(PreviewAction(url: url, isTutorial: isTutorial)),
       report: (type, course, sem, branch) => dispatch(
         ReportAction(type: type, course: course, sem: sem, branch: branch),
       ),
@@ -30,7 +31,7 @@ class ExtrasVM extends VmFactory<AppState, ExtrasWidget> {
 
 class EVM extends Vm {
   final List<Extra> extrasList;
-  final Function(String) preview;
+  final Function(String, bool) preview;
   final Function(String, String, String) download;
   final Function(String, String, String, String) report;
   final ExtrasUnion extrasUnion;

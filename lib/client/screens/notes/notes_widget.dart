@@ -146,9 +146,7 @@ class _NotesState extends State<Notes> with AutomaticKeepAliveClientMixin {
                               college: (nvm.notesList[ni]).college,
                               subject: (nvm.notesList[ni]).subject,
                               units: (nvm.notesList[ni]).units,
-                              votesCount: (nvm.notesList[ni].votes) ?? 0,
-                              vote: nvm.vote,
-                              isUpvoted: nvm.isUpvoted,
+                              size: nvm.notesList[ni].size,
                             );
                           }
                         } else if (nvm.notesUnion is IsEmpty) {

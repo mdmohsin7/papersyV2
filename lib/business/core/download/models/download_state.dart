@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:filex/filex.dart';
 
 class DownloadState extends Equatable{
-  final List<FileSystemEntity> files;
+  final List<DirectoryItem> files;
   final bool permissionStatus;
 
   DownloadState({this.files, this.permissionStatus});
