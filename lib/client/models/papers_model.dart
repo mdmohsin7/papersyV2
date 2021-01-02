@@ -31,4 +31,14 @@ class Paper {
       size: _data['si'],
     );
   }
+  Map<dynamic, dynamic> toJosn() {
+    return {
+      "a": uploader,
+      "link": download,
+      "s": subject,
+      'si':size,
+      'y': year,
+      'isv': false,
+    };
+  }
 }

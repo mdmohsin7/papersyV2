@@ -6,14 +6,14 @@ class Note {
   final String subject;
   final String units;
   final String download;
-  final int votes;
+  final String size;
   final String id;
   final bool isVerified;
 
   Note(
       {this.isVerified,
       this.id,
-      this.votes,
+      this.size,
       this.author,
       this.college,
       this.subject,
@@ -23,14 +23,25 @@ class Note {
   factory Note.fromFirestore(DocumentSnapshot doc) {
     var _data = doc.data();
     return Note(
-      author: _data['a'],
-      college: _data['c'],
-      subject: _data['s'],
-      units: _data['u'],
-      download: _data['link'],
-      votes: _data['v'],
-      id: _data['id'],
-      isVerified: _data['isv']
-    );
+        author: _data['a'],
+        college: _data['c'],
+        subject: _data['s'],
+        units: _data['u'],
+        download: _data['link'],
+        id: _data['id'],
+        isVerified: _data['isv'],
+        size: _data['si']);
+  }
+
+  Map<dynamic, dynamic> toJosn() {
+    return {
+      "a": author,
+      "link": download,
+      "s": subject,
+      "c": college,
+      'si': size,
+      'u': units,
+      'isv': false,
+    };
   }
 }
