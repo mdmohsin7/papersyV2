@@ -202,9 +202,6 @@ class PapersCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(
-                  width: _width * 1.8,
-                ),
                 Text(
                   size == null ? "unavailable" : filesize(size),
                   style: TextStyle(

@@ -195,5 +195,11 @@ class _PapersState extends State<Papers> with AutomaticKeepAliveClientMixin {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    myInterstitial.dispose();
+  }
+
+  @override
   bool get wantKeepAlive => true;
 }

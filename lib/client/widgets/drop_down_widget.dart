@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../sizeconfig.dart';
+
 class DropDownWidget extends StatelessWidget {
   final Widget child;
   final bool isYear;
@@ -8,6 +10,9 @@ class DropDownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double _height = SizeConfig.blockSizeVertical;
+    double _width = SizeConfig.blockSizeHorizontal;
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -19,8 +24,8 @@ class DropDownWidget extends StatelessWidget {
           )
         ],
       ),
-      height: isYear ? 40 : 45,
-      width: isYear ? 100 : 190,
+      height: isYear ? _height * 6.8 : _height * 7.4,
+      width: isYear ? _width * 32 : _width * 72,
       child: child,
     );
   }

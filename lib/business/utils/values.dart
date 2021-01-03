@@ -9,6 +9,8 @@ class Values {
       "Select the college (to which the notes belong), subject and total units of the subject";
   static const String secondFormPapers =
       "Select the subject and year/years to which the papers belong";
+  static const String secondFormExtras =
+      "Select the subject and units to which the resources belong";
   static const String initialForm =
       "Select the course, branch and semester to which you want to upload your notes/papers";
   static const String personalize =
