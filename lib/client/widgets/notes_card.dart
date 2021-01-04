@@ -1,5 +1,5 @@
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:papersy/sizeconfig.dart';
 import 'package:share/share.dart';
@@ -10,16 +10,12 @@ class NotesCard extends StatelessWidget {
   final String units;
   final String author;
   final Function download;
-  final int votesCount;
-  final Function vote;
-  final bool isUpvoted;
+  final String size;
   final Function preview;
   final Function report;
 
   const NotesCard(
-      {this.votesCount,
-      this.vote,
-      this.isUpvoted,
+      {this.size,
       this.subject,
       this.college,
       this.units,
@@ -209,23 +205,17 @@ class NotesCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconButton(
-                  onPressed: () {
-                    vote();
-                  },
-                  icon: isUpvoted
-                      ? Icon(Boxicons.bxs_upvote)
-                      : Icon(Boxicons.bx_upvote),
+                SizedBox(
+                  width: _width * 1.8,
                 ),
                 Text(
-                  (votesCount ?? 0).toString(),
+                  size == null ? "unavailable" : filesize(size),
                   style: TextStyle(
                     color: Theme.of(context).textTheme.headline5.color,
                   ),
                 ),
-                const Icon(Boxicons.bx_downvote),
-                const VerticalDivider(
-                  width: 3,
+                VerticalDivider(
+                  width: _width * 2.6,
                 ),
                 TextButton(
                     onPressed: () {

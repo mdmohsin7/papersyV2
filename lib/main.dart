@@ -12,6 +12,7 @@ import 'package:papersy/business/utils/values.dart';
 import 'package:papersy/client/routes/route_generator.dart';
 import 'package:papersy/confidential/confidential_data.dart';
 import './client/screens/home/home_widget.dart';
+import 'business/core/theme/actions/check_theme_action.dart';
 import 'client/screens/theme_connector.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -79,6 +80,7 @@ class _MyAppState extends State<MyApp> {
       store: store,
       child: StoreConnector<AppState, TVM>(
         vm: ThemeVM(),
+        onInit: (store) => checkTheme(store),
         builder: (context, tvm) => FeatureDiscovery(
           child: MaterialApp(
             navigatorKey: navigatorKey,
@@ -144,5 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
     print("route ${NavigateAction.getCurrentNavigatorRouteName(context)}");
 
     return Home();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

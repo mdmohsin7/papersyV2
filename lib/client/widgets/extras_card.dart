@@ -1,3 +1,4 @@
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share/share.dart';
@@ -154,7 +155,7 @@ class ExtrasCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GestureDetector(
-                          // onTap: () => preview(),
+                          onTap: () => preview(),
                           child: Container(
                             margin: EdgeInsets.only(left: 8),
                             width: SizeConfig.blockSizeHorizontal * 32,
@@ -176,13 +177,21 @@ class ExtrasCard extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          // onTap: () => download(),
+                          onTap: () {
+                            if (type == "Tutorials") {
+                              return null;
+                            } else {
+                              download();
+                            }
+                          },
                           child: Container(
                             margin: EdgeInsets.only(left: 8),
                             width: SizeConfig.blockSizeHorizontal * 32,
                             height: SizeConfig.blockSizeVertical * 5.2,
                             decoration: BoxDecoration(
-                              color: Theme.of(context).buttonColor,
+                              color: type == "Tutorials"
+                                  ? Colors.grey
+                                  : Theme.of(context).buttonColor,
                               borderRadius: BorderRadius.circular(
                                 5,
                               ),
@@ -209,8 +218,13 @@ class ExtrasCard extends StatelessWidget {
                 SizedBox(
                   width: _width * 1.8,
                 ),
-                Text("10.0 MB"),
-                 VerticalDivider(
+                Text(
+                  size == null ? "unavailable" : filesize(size),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.headline5.color,
+                  ),
+                ),
+                VerticalDivider(
                   width: _width * 2.6,
                 ),
                 TextButton(
@@ -224,13 +238,13 @@ class ExtrasCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                 VerticalDivider(
+                VerticalDivider(
                   width: _width * 2.6,
                 ),
                 TextButton(
                   onPressed: () {
                     Share.share(
-                      'Hey check out this subject notes in Papersy app https://play.google.com/store/apps/details?id=com.thedumbcoders.papersy',
+                      'Hey check out this $type of $subject in Papersy app https://play.google.com/store/apps/details?id=com.thedumbcoders.papersy',
                     );
                   },
                   child: Text(
@@ -241,7 +255,7 @@ class ExtrasCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width:_width * 1.8,
+                  width: _width * 1.8,
                 ),
               ],
             ),

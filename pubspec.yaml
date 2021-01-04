@@ -43,13 +43,13 @@ dependencies:
   flutter_downloader: ^1.5.2
   connectivity: ^2.0.2
   share: ^0.6.5 
-  url_launcher: ^5.7.10 
-  advance_pdf_viewer: ^1.2.1+1
+  url_launcher: ^5.7.10
   filesize: ^1.0.4
-  filex:
-    git:
-      url: https://github.com/mdmohsin7/filex
-      ref: dev
+  filex: ^0.3.0
+  # filex:
+  #   git:
+  #     url: https://github.com/mdmohsin7/filex
+  #     ref: dev
 
   #MISC
   equatable: ^1.2.5

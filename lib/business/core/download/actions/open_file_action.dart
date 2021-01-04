@@ -11,12 +11,7 @@ class OpenFileAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     print("open");
-    // File file = File(filePath);
     await OpenFile.open(filePath);
-    // PDFDocument doc = await PDFDocument.fromFile(file);
-    // if (doc != null) {
-    //   dispatch(NavigateAction.pushNamed("pdf_viewer", arguments: doc));
-    // }
     return null;
   }
 }

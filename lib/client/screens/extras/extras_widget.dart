@@ -38,7 +38,6 @@ class ExtrasWidget extends StatelessWidget {
                     },
                     child: Builder(
                       builder: (context) {
-                        print("pre3 = ${evm.extrasUnion}");
                         if (evm.extrasUnion is None) {
                           return Container(
                             height: _height * 20,
@@ -67,7 +66,7 @@ class ExtrasWidget extends StatelessWidget {
                             children: [
                               SizedBox(height: _height * 6),
                               Center(
-                                child: CircularProgressIndicator(),
+                                child: const CircularProgressIndicator(),
                               ),
                             ],
                           );
@@ -78,13 +77,9 @@ class ExtrasWidget extends StatelessWidget {
                             );
                           } else {
                             return ExtrasCard(
+                              type: evm.extrasList[index].type,
                               report: () {
-                                evm.report(
-                                  "P",
-                                  "OU",
-                                  evm.extrasList[index].subject,
-                                  evm.extrasList[index].uploader,
-                                );
+                                evm.report(evm.extrasList[index].ref);
                               },
                               preview: () async {
                                 // count1++;
@@ -94,11 +89,16 @@ class ExtrasWidget extends StatelessWidget {
                                 //     myInterstitial.show();
                                 //   }
                                 // }
-                                // evm.preview((evm.extrasList[index]).download);
+                                bool isTut =
+                                    evm.extrasList[index].type == "Tutorials"
+                                        ? true
+                                        : false;
+                                evm.preview(
+                                    (evm.extrasList[index]).link, isTut);
                               },
                               download: () async {
                                 String sub = (evm.extrasList[index]).subject;
-                                String year = (evm.extrasList[index]).units;
+                                String units = (evm.extrasList[index]).units;
                                 String link = (evm.extrasList[index]).id != null
                                     ? (evm.extrasList[index]).id
                                     : (evm.extrasList[index]).link;
@@ -109,11 +109,12 @@ class ExtrasWidget extends StatelessWidget {
                                 //     myInterstitial.show();
                                 //   }
                                 // }
-                                evm.download(sub, year, link);
+                                evm.download(sub, units, link);
                               },
                               author: (evm.extrasList[index]).uploader,
                               subject: (evm.extrasList[index]).subject,
                               units: (evm.extrasList[index]).units,
+                              size: (evm.extrasList[index]).size,
                             );
                           }
                         } else if (evm.extrasUnion is NoInternet) {
@@ -130,8 +131,8 @@ class ExtrasWidget extends StatelessWidget {
                                     "assets/no_data.svg",
                                   ),
                                 ),
-                                Text(
-                                  "Looks like we don\'t have papers of this branch",
+                                const Text(
+                                  "Looks like we don\'t have any extra resources of this branch",
                                 ),
                               ],
                             ),
@@ -144,16 +145,14 @@ class ExtrasWidget extends StatelessWidget {
                       },
                     ),
                   );
-                  // return ExtrasCard(
-                  //   author: "test",
-                  //   download: () {},
-                  //   preview: () {},
-                  //   subject: "testing",
-                  //   type: "Important Questions",
-                  //   units: "1-5",
-                  // );
                 },
-                childCount: 1,
+                childCount: evm.extrasList == null
+                    ? 1
+                    : evm.extrasUnion is Loading
+                        ? 1
+                        : evm.extrasList.isEmpty
+                            ? 1
+                            : evm.extrasList.length + 1,
               ),
             ),
           ],

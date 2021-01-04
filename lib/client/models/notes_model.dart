@@ -6,14 +6,18 @@ class Note {
   final String subject;
   final String units;
   final String download;
-  final int votes;
+  final String size;
   final String id;
   final bool isVerified;
+  final String docId;
+  final DocumentReference ref;
 
   Note(
       {this.isVerified,
       this.id,
-      this.votes,
+      this.docId,
+      this.ref,
+      this.size,
       this.author,
       this.college,
       this.subject,
@@ -28,9 +32,23 @@ class Note {
       subject: _data['s'],
       units: _data['u'],
       download: _data['link'],
-      votes: _data['v'],
       id: _data['id'],
-      isVerified: _data['isv']
+      isVerified: _data['isv'],
+      size: _data['si'],
+      docId: doc.id,
+      ref: doc.reference,
     );
+  }
+
+  Map<dynamic, dynamic> toJosn() {
+    return {
+      "a": author,
+      "link": download,
+      "s": subject,
+      "c": college,
+      'si': size,
+      'u': units,
+      'isv': false,
+    };
   }
 }

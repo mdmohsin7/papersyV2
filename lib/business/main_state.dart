@@ -7,7 +7,6 @@ import 'package:papersy/business/core/home/models/home_state.dart';
 import 'package:papersy/business/core/preview/models/preview_state.dart';
 import 'package:papersy/business/core/theme/models/theme_state.dart';
 import 'package:papersy/business/core/upload/models/upload_state.dart';
-import 'package:papersy/business/core/user_activity/models/user_activity_state.dart';
 
 class AppState extends Equatable {
   final AuthState authState;
@@ -16,7 +15,6 @@ class AppState extends Equatable {
   final UploadState uploadState;
   final DownloadState downloadState;
   final ThemeState themeState;
-  final UserActivityState userActivityState;
   final Wait wait;
   final PreviewState previewState;
 
@@ -28,7 +26,6 @@ class AppState extends Equatable {
       this.uploadState,
       this.downloadState,
       this.themeState,
-      this.userActivityState,
       this.wait});
 
   AppState copy(
@@ -39,7 +36,6 @@ class AppState extends Equatable {
       UploadState uploadState,
       DownloadState downloadState,
       ThemeState themeState,
-      UserActivityState userActivityState,
       PreviewState previewState}) {
     return AppState(
       authState: authState ?? this.authState,
@@ -49,7 +45,6 @@ class AppState extends Equatable {
       downloadState: downloadState ?? this.downloadState,
       themeState: themeState ?? this.themeState,
       wait: wait ?? this.wait,
-      userActivityState: userActivityState ?? this.userActivityState,
       previewState: previewState ?? this.previewState,
     );
   }
@@ -62,7 +57,6 @@ class AppState extends Equatable {
       uploadState: UploadState.initialState(),
       downloadState: DownloadState.initialState(),
       themeState: ThemeState.initialState(),
-      userActivityState: UserActivityState.initialState(),
       previewState: PreviewState.initialState(),
       wait: Wait(),
     );
@@ -77,7 +71,6 @@ class AppState extends Equatable {
         downloadState,
         themeState,
         wait,
-        userActivityState,
         previewState,
       ];
 }

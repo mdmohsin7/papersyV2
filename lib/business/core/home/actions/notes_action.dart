@@ -19,6 +19,8 @@ class NotesAction extends ReduxAction<AppState> {
           notesUnion: NotesUnion.isEmpty(),
           papers: state.homeState.papers,
           papersUnion: state.homeState.papersUnion,
+          extras: state.homeState.extras,
+          extrasUnion: state.homeState.extrasUnion,
         ),
       );
     } else {
@@ -30,6 +32,8 @@ class NotesAction extends ReduxAction<AppState> {
           notesUnion: NotesUnion.loaded(),
           papers: state.homeState.papers,
           papersUnion: state.homeState.papersUnion,
+          extras: state.homeState.extras,
+          extrasUnion: state.homeState.extrasUnion,
         ),
       );
     }

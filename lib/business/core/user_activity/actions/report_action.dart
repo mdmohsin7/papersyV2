@@ -4,14 +4,12 @@ import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:papersy/business/main_state.dart';
+import 'package:papersy/business/utils/values.dart';
 
 class ReportAction extends ReduxAction<AppState> {
-  final String type;
-  final String course;
-  final String branch;
-  final String sem;
+  final DocumentReference ref;
 
-  ReportAction({this.type, this.course, this.branch, this.sem});
+  ReportAction({this.ref});
 
   @override
   Future<AppState> reduce() async {
@@ -19,16 +17,15 @@ class ReportAction extends ReduxAction<AppState> {
     if (uid != null) {
       await FirebaseFirestore.instance.collection("Reports").doc().set({
         "uid": uid,
-        "t": type,
-        "c": course,
-        "s": sem,
-      }).whenComplete(() => throw UserException(
-          "Reported successfully. We will look into those notes/papers. If we don't find anything wrong or you reported them for fun/revenge/etc, we might ban your account based on your activity."));
-    } else if(uid == null) {
-      throw UserException("You need to be signed in to report notes/papers");
+        "doc": ref.id,
+        "p": ref.parent.path,
+      }).whenComplete(() => throw UserException(Values.reported));
+    } else if (uid == null) {
+      throw UserException("You need to be signed in to be able to report anything.");
     }
     return null;
   }
+
   @override
   Object wrapError(error) {
     return UserException(error.toString());
