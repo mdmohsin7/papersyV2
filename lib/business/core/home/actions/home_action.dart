@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:papersy/business/core/filter/actions/fetch_courses_action.dart';
 import 'package:papersy/business/core/home/actions/extras_action.dart';
-import 'package:papersy/business/core/theme/actions/change_theme_action.dart';
 import 'package:papersy/business/main_state.dart';
 import 'package:papersy/business/unions/extras/extras_union.dart';
 import 'package:papersy/business/unions/notes/notes_union.dart';
@@ -34,11 +33,6 @@ class HomeAction extends ReduxAction<AppState> {
 
   @override
   Future<void> before() async {
-    if (await LocalPersist('theme').exists()) {
-      var isDark = await LocalPersist('theme').load();
-      Map a = isDark[0];
-      dispatch(ChangeThemeAction(a['isDark']));
-    }
     dispatch(WaitAction.add("fetching"));
     var sub = await Connectivity().checkConnectivity();
     if (sub == ConnectivityResult.none) {
