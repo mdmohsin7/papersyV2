@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:async_redux/async_redux.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:papersy/business/main_state.dart';
@@ -10,10 +11,45 @@ import 'package:papersy/client/widgets/extras_card.dart';
 
 import '../../../sizeconfig.dart';
 
-class ExtrasWidget extends StatelessWidget {
+class ExtrasWidget extends StatefulWidget {
   const ExtrasWidget();
+
+  @override
+  _ExtrasWidgetState createState() => _ExtrasWidgetState();
+}
+
+class _ExtrasWidgetState extends State<ExtrasWidget>
+    with AutomaticKeepAliveClientMixin {
+  InterstitialAd myInterstitial;
+  static int count2;
+  @override
+  void initState() {
+    super.initState();
+    count2 = 0;
+    myInterstitial = InterstitialAd(
+      adUnitId: "ca-app-pub-2155617318975151/7902230811",
+      targetingInfo: MobileAdTargetingInfo(
+        keywords: <String>[
+          'shopping',
+          'education',
+          'undergraduate',
+          'courses',
+          'pharmacy',
+          'postgraduate',
+          'programming',
+          'educational loan'
+        ],
+      ),
+      listener: (MobileAdEvent event) {
+        print("InterstitialAd event is $event");
+      },
+    );
+    myInterstitial.load();
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     SizeConfig().init(context);
     double _height = SizeConfig.blockSizeVertical;
     double _width = SizeConfig.blockSizeHorizontal;
@@ -82,13 +118,13 @@ class ExtrasWidget extends StatelessWidget {
                                 evm.report(evm.extrasList[index].ref);
                               },
                               preview: () async {
-                                // count1++;
-                                // myInterstitial.load();
-                                // if (count1 % 5 == 0) {
-                                //   if (await myInterstitial.isLoaded()) {
-                                //     myInterstitial.show();
-                                //   }
-                                // }
+                                count2++;
+                                myInterstitial.load();
+                                if (count2 % 5 == 0) {
+                                  if (await myInterstitial.isLoaded()) {
+                                    myInterstitial.show();
+                                  }
+                                }
                                 bool isTut =
                                     evm.extrasList[index].type == "Tutorials"
                                         ? true
@@ -102,13 +138,13 @@ class ExtrasWidget extends StatelessWidget {
                                 String link = (evm.extrasList[index]).id != null
                                     ? (evm.extrasList[index]).id
                                     : (evm.extrasList[index]).link;
-                                // count1++;
-                                // myInterstitial.load();
-                                // if (count1 % 3 == 0) {
-                                //   if (await myInterstitial.isLoaded()) {
-                                //     myInterstitial.show();
-                                //   }
-                                // }
+                                count2++;
+                                myInterstitial.load();
+                                if (count2 % 3 == 0) {
+                                  if (await myInterstitial.isLoaded()) {
+                                    myInterstitial.show();
+                                  }
+                                }
                                 evm.download(sub, units, link);
                               },
                               author: (evm.extrasList[index]).uploader,
@@ -160,4 +196,13 @@ class ExtrasWidget extends StatelessWidget {
       },
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    myInterstitial.dispose();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

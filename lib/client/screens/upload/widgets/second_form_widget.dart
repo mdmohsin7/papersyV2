@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_conditional_rendering/conditional_switch.dart';
 import 'package:papersy/business/main_state.dart';
+import 'package:papersy/business/utils/validators.dart';
 import 'package:papersy/business/utils/values.dart';
 import 'package:papersy/client/screens/upload/upload_connector.dart';
 import 'package:papersy/client/widgets/drop_down_menu.dart';
@@ -39,13 +40,21 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                           textAlign: TextAlign.center,
                         ),
                       )
-                    : Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Text(
-                          Values.secondFormPapers,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                    : uvm.selectedValues["Type"] == "Question Papers"
+                        ? Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Text(
+                              Values.secondFormPapers,
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Text(
+                              Values.secondFormExtras,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                 Container(
                   child: DropDownMenu(
                     onChanged: (value) => uvm.onChanged("Subject", value),
@@ -66,33 +75,41 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                 SizedBox(
                   height: SizeConfig.blockSizeVertical * 2.8,
                 ),
-                DropDownMenu(
-                  onChanged: (value) {
-                    if (uvm.selectedValues["Type"] == "Notes") {
-                      uvm.onChanged("College", value);
-                    } else {
-                      uvm.onChanged("Year", value);
-                    }
-                  },
-                  customHeight: false,
-                  hint: uvm.selectedValues["Type"] == "Notes"
-                      ? "College"
-                      : "Year",
-                  value: uvm.selectedValues[
-                      uvm.selectedValues["Type"] == "Notes"
-                          ? "College"
-                          : "Year"],
-                  items: [
-                    if (uvm.selectedValues["Subject"] != null)
-                      if (uvm.selectedValues["Type"] == "Notes")
-                        for (var course in uvm.courses.where((element) =>
-                            element.courseName == uvm.selectedValues["Course"]))
-                          for (var cl in course.colleges) cl,
-                    if (uvm.selectedValues["Subject"] != null)
-                      if (uvm.selectedValues["Type"] == "Question Papers")
-                        for (var y in a) y
-                  ],
-                ),
+                (uvm.selectedValues["Type"] == "Notes") ||
+                        (uvm.selectedValues["Type"] == "Question Papers")
+                    ? DropDownMenu(
+                        onChanged: (value) {
+                          if (uvm.selectedValues["Type"] == "Notes") {
+                            uvm.onChanged("College", value);
+                          } else {
+                            uvm.onChanged("Year", value);
+                          }
+                        },
+                        customHeight: false,
+                        hint: uvm.selectedValues["Type"] == "Notes"
+                            ? "College"
+                            : uvm.selectedValues["Type"] == "Question Papers"
+                                ? "Year"
+                                : uvm.selectedValues["Type"],
+                        value: uvm.selectedValues[uvm.selectedValues["Type"] ==
+                                "Notes"
+                            ? "College"
+                            : uvm.selectedValues["Type"] == "Question Papers"
+                                ? "Year"
+                                : "Type"],
+                        items: [
+                          if (uvm.selectedValues["Subject"] != null)
+                            if (uvm.selectedValues["Type"] == "Notes")
+                              for (var course in uvm.courses.where((element) =>
+                                  element.courseName ==
+                                  uvm.selectedValues["Course"]))
+                                for (var cl in course.colleges) cl,
+                          if (uvm.selectedValues["Subject"] != null)
+                            if (uvm.selectedValues["Type"] == "Question Papers")
+                              for (var y in a) y
+                        ],
+                      )
+                    : Container(),
                 SizedBox(
                   height: SizeConfig.blockSizeVertical * 2.8,
                 ),
@@ -120,7 +137,7 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                                 DropDownWidget(
                                   isYear: true,
                                   child: Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                       left: 6.0,
                                       right: 4.0,
                                       top: 6.0,
@@ -143,7 +160,7 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                                 DropDownWidget(
                                   isYear: true,
                                   child: Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 6.0,
                                         right: 4.0,
                                         top: 6.0,
@@ -173,7 +190,7 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                                 DropDownWidget(
                                   isYear: true,
                                   child: Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 6.0,
                                         right: 4.0,
                                         top: 6.0,
@@ -207,7 +224,7 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                         borderRadius:
                             BorderRadiusDirectional.all(Radius.circular(10)),
                         boxShadow: [
-                          BoxShadow(
+                          const BoxShadow(
                             spreadRadius: 0.5,
                             color: Colors.black,
                           )
@@ -232,11 +249,9 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                               max: 5,
                               min: 1,
                               divisions: 4,
-                              onChanged: uvm.selectedValues["College"] != null
-                                  ? (value) {
-                                      uvm.onChanged("Range", value);
-                                    }
-                                  : null,
+                              onChanged: (value) {
+                                uvm.onChanged("Range", value);
+                              },
                               values: RangeValues(
                                   (uvm.selectedValues["min"] ?? 2).toDouble(),
                                   (uvm.selectedValues["max"] ?? 4).toDouble()),
@@ -253,51 +268,91 @@ class _SecondFormWidgetState extends State<SecondFormWidget> {
                 SizedBox(
                   height: SizeConfig.blockSizeVertical * 3,
                 ),
-                InkWell(
-                  onTap: (uvm.selectedValues["College"] != null) ||
-                          (uvm.selectedValues["Year"] != null &&
-                              (uvm.selectedValues["y1"] != null ||
-                                  uvm.selectedValues["y3"] != null))
-                      ? () => uvm.filePicker()
-                      : null,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius:
-                          BorderRadiusDirectional.all(Radius.circular(10)),
-                      boxShadow: [
-                        BoxShadow(
-                          spreadRadius: 0.5,
-                          color: Colors.black,
-                        )
-                      ],
-                    ),
-                    height: SizeConfig.blockSizeVertical * 6.8,
-                    width: SizeConfig.blockSizeHorizontal * 72,
-                    child: uvm.file == null
-                        ? Center(
-                            child: Text(
-                              "Select PDF",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 55,
-                                child: Text(
-                                  uvm.fileName ?? '',
-                                  maxLines: 2,
+                Conditional.single(
+                  context: context,
+                  conditionBuilder: (c) =>
+                      uvm.selectedValues["Type"] == "Tutorials",
+                  fallbackBuilder: (c) {
+                    return InkWell(
+                      onTap: (uvm.selectedValues["College"] != null ||
+                                  uvm.selectedValues["Subject"] != null) ||
+                              (uvm.selectedValues["Year"] != null &&
+                                  (uvm.selectedValues["y1"] != null ||
+                                      uvm.selectedValues["y3"] != null))
+                          ? () => uvm.filePicker()
+                          : null,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius:
+                              BorderRadiusDirectional.all(Radius.circular(10)),
+                          boxShadow: [
+                            BoxShadow(
+                              spreadRadius: 0.5,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
+                        height: SizeConfig.blockSizeVertical * 6.8,
+                        width: SizeConfig.blockSizeHorizontal * 72,
+                        child: uvm.file == null
+                            ? Center(
+                                child: const Text(
+                                  "Select PDF",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Icon(
-                                Icons.close,
-                                color: Theme.of(context).accentIconTheme.color,
                               )
-                            ],
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    width: SizeConfig.blockSizeHorizontal * 55,
+                                    child: Text(
+                                      uvm.fileName ?? '',
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.close,
+                                    color:
+                                        Theme.of(context).accentIconTheme.color,
+                                  )
+                                ],
+                              ),
+                      ),
+                    );
+                  },
+                  widgetBuilder: (c) {
+                    return DropDownWidget(
+                      isYear: false,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Form(
+                          child: TextFormField(
+                            cursorColor: Theme.of(context).primaryColor,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            initialValue: uvm.selectedValues["link"] ?? null,
+                            onChanged: (value) => uvm.onChanged("Link", value),
+                            onFieldSubmitted: (value) =>
+                                uvm.onChanged("Link", value),
+                            validator: (value) => validateURL(value),
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.only(left: 10.0, bottom: 2.0),
+                              border: InputBorder.none,
+                              hintText: "YouTube/Vimeo/Etc Link",
+                            ),
+                            enabled: uvm.selectedValues["Semester"] != null
+                                ? true
+                                : false,
                           ),
-                  ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: SizeConfig.blockSizeVertical * 5,

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:async_redux/async_redux.dart';
-import 'package:papersy/business/core/upload/actions/index-action.dart';
+import 'package:papersy/business/core/upload/actions/index_action.dart';
 import 'package:papersy/business/main_state.dart';
 import 'package:papersy/business/core/upload/actions/file_picker_action.dart';
 import 'package:papersy/business/core/upload/actions/on_changed_action.dart';

@@ -31,6 +31,9 @@ class InitialFormWidget extends StatelessWidget {
                 items: [
                   "Notes",
                   "Question Papers",
+                  "Important Questions",
+                  "Formulas",
+                  "Tutorials",
                 ],
                 value: uvm.selectedValues["Type"],
                 onChanged: (value) => uvm.onChanged("Type", value),
