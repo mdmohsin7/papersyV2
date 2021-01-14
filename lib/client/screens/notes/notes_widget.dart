@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:async_redux/async_redux.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -150,10 +149,10 @@ class _NotesState extends State<Notes> with AutomaticKeepAliveClientMixin {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                    height: _height * 15,
-                                    width: _width * 20,
-                                    child:
-                                        SvgPicture.asset("assets/no_data.svg")),
+                                  height: _height * 15,
+                                  width: _width * 20,
+                                  child: SvgPicture.asset("assets/no_data.svg"),
+                                ),
                                 const Text(
                                     "Looks like we don\'t have notes of this branch"),
                               ],
@@ -189,6 +188,12 @@ class _NotesState extends State<Notes> with AutomaticKeepAliveClientMixin {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    myInterstitial.dispose();
   }
 
   @override

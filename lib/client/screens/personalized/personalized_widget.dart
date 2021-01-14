@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:papersy/client/screens/extras/extras_widget.dart';
 import 'package:papersy/sizeconfig.dart';
 import '../papers/papers_widget.dart';
 import '../notes/notes_widget.dart';
@@ -10,7 +11,7 @@ class PersonalizedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: NestedScrollView(
         headerSliverBuilder: (context, val) => <Widget>[
           SliverOverlapAbsorber(
@@ -40,6 +41,7 @@ class PersonalizedWidget extends StatelessWidget {
                 tabs: [
                  const Text("Notes"),
                   const Text("Papers"),
+                  const Text("Extras")
                 ],
               ),
             ),
@@ -49,6 +51,7 @@ class PersonalizedWidget extends StatelessWidget {
           children: [
             const Notes(),
             const Papers(),
+            const ExtrasWidget(),
           ],
         ),
       ),

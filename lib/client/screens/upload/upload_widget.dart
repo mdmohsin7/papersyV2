@@ -29,8 +29,9 @@ class UploadWidget extends StatelessWidget {
                 builder: (context) {
                   return AlertDialog(
                     backgroundColor: Theme.of(context).backgroundColor,
-                    title: Text("Are you sure you want to leave this screen?"),
-                    content: Text("The changes you made will be lost."),
+                    title: const Text(
+                        "Are you sure you want to leave this screen?"),
+                    content: const Text("The changes you made will be lost."),
                     actions: [
                       RaisedButton(
                         elevation: 0.0,
@@ -97,7 +98,7 @@ class UploadWidget extends StatelessWidget {
                           textColor: Theme.of(context).primaryColor,
                           elevation: 0.0,
                           color: Theme.of(context).backgroundColor,
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           child: Text(uvm.index == 0 ? "Cancel" : "Back"),
@@ -115,7 +116,7 @@ class UploadWidget extends StatelessWidget {
                           context: context,
                           conditionBuilder: (c) => uvm.index == 0,
                           widgetBuilder: (c) => RaisedButton(
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             child: Text(
@@ -141,12 +142,15 @@ class UploadWidget extends StatelessWidget {
                             child: Text(
                               "Upload",
                               style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .color),
+                                color:
+                                    Theme.of(context).textTheme.headline5.color,
+                              ),
                             ),
-                            onPressed: uvm.file != null && !uvm.isUploading
+                            onPressed: (uvm.file != null ||
+                                        (uvm.selectedValues["Link"] != null &&
+                                            uvm.selectedValues["Link"] !=
+                                                '')) &&
+                                    !uvm.isUploading
                                 ? () async {
                                     showDialog(
                                       barrierDismissible: false,
@@ -160,14 +164,6 @@ class UploadWidget extends StatelessWidget {
                                             title: Center(
                                               child: Text("Uploading"),
                                             ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text("Cancel"),
-                                              )
-                                            ],
                                             content: Container(
                                               height: _height * 10,
                                               width: _width * 10,
@@ -179,7 +175,7 @@ class UploadWidget extends StatelessWidget {
                                                               10.0),
                                                       child: Text(Values
                                                           .uploadingFiles)),
-                                                  LinearProgressIndicator()
+                                                  const LinearProgressIndicator()
                                                 ],
                                               ),
                                             ),
