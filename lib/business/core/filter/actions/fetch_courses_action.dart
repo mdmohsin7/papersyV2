@@ -9,10 +9,10 @@ import '../../../unions/filter/filter_union.dart';
 import 'pass_data_action.dart';
 
 class FetchCoursesAction extends ReduxAction<AppState> {
-  static Stream<List<CourseModel>> coursesList = FirebaseFirestore.instanceFor(
+  static Stream<List<Course>> coursesList = FirebaseFirestore.instanceFor(
     app: Firebase.app("v2"),
   ).collection("Courses").snapshots().asBroadcastStream().map((snap) =>
-      snap.docs.map((doc) => CourseModel.fromFirestore(doc)).toList());
+      snap.docs.map((doc) => Course.fromFirestore(doc)).toList());
 
   @override
   AppState reduce() {

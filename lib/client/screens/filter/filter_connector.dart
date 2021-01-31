@@ -32,7 +32,7 @@ class FVM extends Vm {
   final Function(dynamic) onChange;
   final Function(bool) update;
   final Function save;
-  final List<CourseModel> coursesList;
+  final List<Course> coursesList;
   final Map<dynamic, dynamic> selectedVals;
   final bool getNotified;
   final FilterUnion filterUnion;
