@@ -4,10 +4,10 @@ import 'package:papersy/client/models/course_model.dart';
 import '../../../main_state.dart';
 import '../../../unions/filter/filter_union.dart';
 
-class PassDataAction extends ReduxAction<AppState> {
+class PassCoursesAction extends ReduxAction<AppState> {
   final List<Course> coursesList;
 
-  PassDataAction({this.coursesList});
+  PassCoursesAction({this.coursesList});
 
   @override
   AppState reduce() {

@@ -6,7 +6,7 @@ import 'package:papersy/client/models/course_model.dart';
 import '../../../main_state.dart';
 import '../../../unions/filter/filter_union.dart';
 
-import 'pass_data_action.dart';
+import 'pass_courses_action.dart';
 
 class FetchCoursesAction extends ReduxAction<AppState> {
   static Stream<List<Course>> coursesList = FirebaseFirestore.instanceFor(
@@ -17,7 +17,7 @@ class FetchCoursesAction extends ReduxAction<AppState> {
   @override
   AppState reduce() {
     coursesList.listen((event) {
-      dispatch(PassDataAction(coursesList: event));
+      dispatch(PassCoursesAction(coursesList: event));
     });
     return state.copy(
       filterState: FilterState(
