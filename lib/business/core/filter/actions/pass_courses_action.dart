@@ -5,7 +5,7 @@ import '../../../main_state.dart';
 import '../../../unions/filter/filter_union.dart';
 
 class PassDataAction extends ReduxAction<AppState> {
-  final List<CourseModel> coursesList;
+  final List<Course> coursesList;
 
   PassDataAction({this.coursesList});
 

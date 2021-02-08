@@ -5,7 +5,7 @@ import '../../../unions/filter/filter_union.dart';
 class FilterState extends Equatable {
   final dynamic selectedVal;
   final int index;
-  final List<CourseModel> courses;
+  final List<Course> courses;
   final Map<dynamic, dynamic> selectedVals;
   final bool getNotified;
   final FilterUnion filterUnion;
@@ -21,7 +21,7 @@ class FilterState extends Equatable {
   FilterState copy(
       {dynamic selectedVal,
       int index,
-      List<CourseModel> courses,
+      List<Course> courses,
       List<dynamic> selectedVals,
       bool getNotified,
       FilterUnion filterUnion}) {
