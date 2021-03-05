@@ -23,7 +23,7 @@ environment:
 dependencies:
 
   #Architecture/State Management
-  async_redux: ^6.0.3
+  async_redux: ^7.0.2
 
   #Firebase
   firebase_storage: ^7.0.0
@@ -44,6 +44,8 @@ dependencies:
   url_launcher: ^5.7.10
   filesize: ^1.0.4
   filex: ^0.3.0
+  device_info: ^1.0.0
+  path_provider: ^1.6.27
   # filex:
   #   git:
   #     url: https://github.com/mdmohsin7/filex
