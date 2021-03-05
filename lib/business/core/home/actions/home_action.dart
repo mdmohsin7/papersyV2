@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:async_redux/local_persist.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:papersy/business/core/filter/actions/fetch_courses_action.dart';
 import 'package:papersy/business/core/home/actions/extras_action.dart';
 import 'package:papersy/business/main_state.dart';
+import 'package:papersy/business/services/firestore_service.dart';
 import 'package:papersy/business/unions/extras/extras_union.dart';
 import 'package:papersy/business/unions/notes/notes_union.dart';
 import 'package:papersy/business/unions/papers/papers_union.dart';
@@ -28,7 +28,7 @@ class HomeAction extends ReduxAction<AppState> {
   static Stream<List<Note>> notesList;
   static Stream<List<Paper>> papersList;
   static Stream<List<Extra>> extrasList;
-
+  FireStoreService _fireStoreService = FireStoreService();
   HomeAction(this.num);
 
   @override
@@ -43,39 +43,9 @@ class HomeAction extends ReduxAction<AppState> {
       if (await LocalPersist("settings").exists()) {
         details = await LocalPersist("settings").load();
         det = details[0];
-        notesList = FirebaseFirestore.instance
-            .collection("Notes")
-            .doc("${det["course"]}")
-            .collection("${det["branch"]}")
-            .doc("${det["semester"]}")
-            .collection("SEM${det["semester"]}")
-            .where("isv", isEqualTo: true)
-            .snapshots()
-            .map(
-              (_ds) => _ds.docs.map((e) => Note.fromFirestore(e)).toList(),
-            );
-        papersList = FirebaseFirestore.instance
-            .collection("Papers")
-            .doc("${det["course"]}")
-            .collection("${det["branch"]}")
-            .doc("${det["semester"]}")
-            .collection("SEM${det["semester"]}")
-            .where("isv", isEqualTo: true)
-            .snapshots()
-            .map(
-              (_ps) => _ps.docs.map((_p) => Paper.fromFirestore(_p)).toList(),
-            );
-        extrasList = FirebaseFirestore.instance
-            .collection("Extras")
-            .doc("${det["course"]}")
-            .collection("${det["branch"]}")
-            .doc("${det["semester"]}")
-            .collection("SEM${det["semester"]}")
-            .where("isv", isEqualTo: true)
-            .snapshots()
-            .map(
-              (_es) => _es.docs.map((_e) => Extra.fromFirestore(_e)).toList(),
-            );
+        notesList = await _fireStoreService.notesList(details: details[0]);
+        papersList = await _fireStoreService.papersList(details: details[0]);
+        extrasList = await _fireStoreService.extrasList(details: details[0]);
       }
     }
   }
