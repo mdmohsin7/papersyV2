@@ -30,7 +30,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
     double _height = SizeConfig.blockSizeVertical;
     double _width = SizeConfig.blockSizeHorizontal;
     return StoreConnector<AppState, PVM>(
-      vm: ProfileVM(),
+      vm: () => ProfileVM(),
       builder: (context, pvm) {
         return Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,

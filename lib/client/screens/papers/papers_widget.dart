@@ -28,6 +28,7 @@ class _PapersState extends State<Papers> with AutomaticKeepAliveClientMixin {
     myInterstitial = InterstitialAd(
       adUnitId: "ca-app-pub-2155617318975151/7902230811",
       targetingInfo: MobileAdTargetingInfo(
+        testDevices: ['E6A72CC52A79C622FCE204400198784C'],
         keywords: <String>[
           'shopping',
           'education',
@@ -53,7 +54,7 @@ class _PapersState extends State<Papers> with AutomaticKeepAliveClientMixin {
     double _height = SizeConfig.blockSizeVertical;
     double _width = SizeConfig.blockSizeHorizontal;
     return StoreConnector<AppState, PVM>(
-      vm: PapersVM(widget),
+      vm: () => PapersVM(widget),
       onInit: (state) => initAction(state, 0),
       builder: (context, pvm) {
         print(pvm.papersList);

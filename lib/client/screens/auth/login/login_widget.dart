@@ -32,7 +32,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return StoreConnector<AppState, LVM>(
-        vm: LoginVM(widget),
+        vm: () => LoginVM(widget),
         builder: (context, vm) {
           return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,

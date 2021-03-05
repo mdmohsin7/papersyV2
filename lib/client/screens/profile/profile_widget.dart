@@ -17,7 +17,7 @@ class ProfileWidget extends StatelessWidget {
     double _height = SizeConfig.blockSizeVertical;
     double _width = SizeConfig.blockSizeHorizontal;
     return StoreConnector<AppState, PVM>(
-      vm: ProfileVM(),
+      vm: () => ProfileVM(),
       builder: (context, pvm) {
         print(pvm.isUpdating);
         return Scaffold(

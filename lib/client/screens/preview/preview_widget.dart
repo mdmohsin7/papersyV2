@@ -14,7 +14,7 @@ class PreviewWidget extends StatelessWidget {
     print("test: ${Uri.encodeComponent(url)}");
     return StoreConnector<AppState, PreVM>(
       onDispose: (store) => previewDispose(store),
-      vm: PreviewVM(),
+      vm: () => PreviewVM(),
       builder: (context, prevm) {
         return Scaffold(
           appBar: AppBar(

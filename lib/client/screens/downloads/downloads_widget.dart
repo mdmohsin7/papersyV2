@@ -13,7 +13,7 @@ class DownloadsWidget extends StatelessWidget {
     SizeConfig().init(context);
     final controller = FilexController(path: "/storage/emulated/0/Papersy/");
     return StoreConnector<AppState, DVM>(
-      vm: DownloadsVM(),
+      vm: () => DownloadsVM(),
       // onInit: (store) => fetchFiles(store),
       builder: (context, dvm) {
         return Scaffold(

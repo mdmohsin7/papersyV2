@@ -27,6 +27,7 @@ class _NotesState extends State<Notes> with AutomaticKeepAliveClientMixin {
     myInterstitial = InterstitialAd(
       adUnitId: "ca-app-pub-2155617318975151/7902230811",
       targetingInfo: MobileAdTargetingInfo(
+        testDevices: ['E6A72CC52A79C622FCE204400198784C'],
         keywords: <String>[
           'shopping',
           'education',
@@ -52,7 +53,7 @@ class _NotesState extends State<Notes> with AutomaticKeepAliveClientMixin {
     double _height = SizeConfig.blockSizeVertical;
     double _width = SizeConfig.blockSizeHorizontal;
     return StoreConnector<AppState, NVM>(
-      vm: NotesVM(widget),
+      vm: () => NotesVM(widget),
       onInit: (state) => initAction(state, 0),
       builder: (context, nvm) {
         return CustomScrollView(

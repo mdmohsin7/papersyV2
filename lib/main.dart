@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
     return StoreProvider<AppState>(
       store: store,
       child: StoreConnector<AppState, TVM>(
-        vm: ThemeVM(),
+        vm: () => ThemeVM(),
         onInit: (store) => checkTheme(store),
         builder: (context, tvm) => FeatureDiscovery(
           child: MaterialApp(

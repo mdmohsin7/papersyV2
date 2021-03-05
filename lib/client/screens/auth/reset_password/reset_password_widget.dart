@@ -26,7 +26,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return StoreConnector<AppState, RPVM>(
-      vm: ResetPasswordVM(),
+      vm: () => ResetPasswordVM(),
       builder: (context, rpvm) {
         return Scaffold(
           appBar: AppBar(

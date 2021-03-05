@@ -17,7 +17,7 @@ class AuthWidget extends StatelessWidget {
     double _height = SizeConfig.blockSizeVertical;
     double _width = SizeConfig.blockSizeHorizontal;
     return StoreConnector<AppState, AVM>(
-      vm: AuthVM(),
+      vm: () => AuthVM(),
       builder: (context, avm) {
         return Scaffold(
           appBar: AppBar(

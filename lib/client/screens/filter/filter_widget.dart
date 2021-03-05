@@ -17,7 +17,7 @@ class FilterWidget extends StatelessWidget {
     return StoreConnector<AppState, FVM>(
       onInit: (state) => initFilterAction(state),
       onDispose: (state) => disposeFilterAction(state),
-      vm: FilterVM(),
+      vm: () => FilterVM(),
       builder: (context, fvm) {
         List<Widget> dropDownMenu = [
           DropDownMenu(

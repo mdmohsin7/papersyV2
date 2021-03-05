@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
     print("route ${NavigateAction.getCurrentNavigatorRouteName(context)}");
 
     return StoreConnector<AppState, HVM>(
-      vm: HomeVM(),
+      vm: () => HomeVM(),
       onDispose: (state) => disposeHomeAction(state),
       onInit: (state) => checkAuthentication(state),
       builder: (context, hvm) {

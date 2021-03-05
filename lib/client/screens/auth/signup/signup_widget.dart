@@ -32,7 +32,7 @@ class _SignupWidgetState extends State<SignupWidget> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return StoreConnector<AppState, SVM>(
-      vm: SignupVM(),
+      vm: () => SignupVM(),
       builder: (context, svm) {
         return Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,

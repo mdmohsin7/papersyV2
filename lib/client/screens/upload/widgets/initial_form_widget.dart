@@ -14,7 +14,7 @@ class InitialFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return StoreConnector<AppState, UVM>(
-      vm: UploadVM(),
+      vm: () => UploadVM(),
       builder: (context, uvm) {
         return Container(
           height: SizeConfig.blockSizeVertical * 76,
